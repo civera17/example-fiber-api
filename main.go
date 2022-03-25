@@ -1,0 +1,36 @@
+package main
+
+import (
+	"log"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/civera17/fintech-test/database"
+	"github.com/civera17/fintech-test/routes"
+)
+
+func setUpRoutes(app *fiber.App) {
+	app.Get("/hello", routes.Hello)
+	app.Get("/allbooks", routes.AllBooks)
+	app.Get("/sql-history", routes.SqlHistory)
+	app.Get("/slowest-queries/:page/size/:size", routes.SlowestQueries)
+	app.Post("/addbook", routes.AddBook)
+	app.Post("/book", routes.Book)
+	app.Put("/update", routes.Update)
+	app.Delete("/delete", routes.Delete)
+}
+
+func main() {
+	database.ConnectDb()
+	app := fiber.New()
+
+	setUpRoutes(app)
+
+	app.Use(cors.New())
+
+	app.Use(func(c *fiber.Ctx) error {
+		return c.SendStatus(404) // => 404 "Not Found"
+	})
+
+	log.Fatal(app.Listen(":3000"))
+}
