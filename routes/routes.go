@@ -9,11 +9,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-//Hello
-func Hello(c *fiber.Ctx) error {
-	return c.SendString("fiber")
-}
-
 //AddBook
 func AddBook(c *fiber.Ctx) error {
 	book := new(models.Book)
@@ -34,14 +29,6 @@ func AllBooks(c *fiber.Ctx) error {
 	return c.Status(200).JSON(books)
 }
 
-//SQLHisory
-func SqlHistory(c *fiber.Ctx) error {
-	queries := []models.QueryInfo{}
-	database.DB.Db.Find(&queries)
-
-	return c.Status(200).JSON(queries)
-}
-
 //SlowestQueries
 func SlowestQueries(c *fiber.Ctx) error {
 	queries := []models.QueryInfo{}
@@ -54,17 +41,6 @@ func SlowestQueries(c *fiber.Ctx) error {
 	})
 
 	return c.Status(200).JSON(queries)
-}
-
-//Book
-func Book(c *fiber.Ctx) error {
-	book := []models.Book{}
-	title := new(models.Book)
-	if err := c.BodyParser(title); err != nil {
-		return c.Status(400).JSON(err.Error())
-	}
-	database.DB.Db.Where("title = ?", title.Title).Find(&book)
-	return c.Status(200).JSON(book)
 }
 
 //Update

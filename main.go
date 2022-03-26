@@ -9,19 +9,23 @@ import (
 	"github.com/civera17/fintech-test/routes"
 )
 
+func main() {
+	database.ConnectDb()
+	app := SetupAPI()
+
+	log.Fatal(app.Listen(":3000"))
+}
+
 func setUpRoutes(app *fiber.App) {
-	app.Get("/hello", routes.Hello)
-	app.Get("/allbooks", routes.AllBooks)
-	app.Get("/sql-history", routes.SqlHistory)
+	// Endpoint that responds with slowest queries sorted by time and type and with pagination
 	app.Get("/slowest-queries/:page/size/:size/type/:type", routes.SlowestQueries)
+	app.Get("/allbooks", routes.AllBooks)
 	app.Post("/addbook", routes.AddBook)
-	app.Post("/book", routes.Book)
 	app.Put("/update", routes.Update)
 	app.Delete("/delete", routes.Delete)
 }
 
-func main() {
-	database.ConnectDb()
+func SetupAPI() *fiber.App {
 	app := fiber.New()
 
 	setUpRoutes(app)
@@ -32,5 +36,5 @@ func main() {
 		return c.SendStatus(404) // => 404 "Not Found"
 	})
 
-	log.Fatal(app.Listen(":3000"))
+	return app
 }

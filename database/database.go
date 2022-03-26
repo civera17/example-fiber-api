@@ -4,8 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/civera17/fintech-test/models"
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/civera17/fintech-test/middleware"
+	"github.com/civera17/fintech-test/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -39,5 +40,28 @@ func ConnectDb() {
 	DB = Dbinstance{
 		Db: db,
 	}
+}
+
+func ConnectMockDb() sqlmock.Sqlmock {
+	sql, mock, err := sqlmock.New()
+	if err != nil {
+		log.Fatal("Failed to connect to mock database. \n", err)
+		os.Exit(2)
+	}
+
+	dialector := postgres.New(postgres.Config{
+		DSN:                  "sqlmock_db_0",
+		DriverName:           "postgres",
+		Conn:                 sql,
+		PreferSimpleProtocol: true,
+	})
+
+	db, err := gorm.Open(dialector)
+
+	DB = Dbinstance{
+		Db: db,
+	}
+
+	return mock
 }
 

@@ -21,6 +21,8 @@ type Plugin interface {
 	Initialize(*gorm.DB) error
 }
 
+// SqlInfoPlugin implements GORM plugin interface , registers callbacs before and after 
+// 		all types of queries to inject a query that writes to db info about query
 type SqlInfoPlugin struct{}
 
 func (op *SqlInfoPlugin) Name() string {
