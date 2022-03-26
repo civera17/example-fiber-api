@@ -2,6 +2,7 @@ package routes
 
 import (
 	"sort"
+	"strings"
 
 	"github.com/civera17/fintech-test/database"
 	"github.com/civera17/fintech-test/models"
@@ -33,6 +34,7 @@ func AllBooks(c *fiber.Ctx) error {
 	return c.Status(200).JSON(books)
 }
 
+//SQLHisory
 func SqlHistory(c *fiber.Ctx) error {
 	queries := []models.QueryInfo{}
 	database.DB.Db.Find(&queries)
@@ -40,9 +42,13 @@ func SqlHistory(c *fiber.Ctx) error {
 	return c.Status(200).JSON(queries)
 }
 
+//SlowestQueries
 func SlowestQueries(c *fiber.Ctx) error {
 	queries := []models.QueryInfo{}
-	database.DB.Db.Scopes(Paginate(c)).Find(&queries)
+
+	queryType := strings.ToUpper(c.Params("type"))
+
+	database.DB.Db.Where("type = ?", queryType).Scopes(Paginate(c)).Find(&queries)
 	sort.Slice(queries, func(i, j int) bool {
 		return queries[i].CostSeconds > queries[j].CostSeconds
 	})

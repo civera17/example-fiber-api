@@ -5,6 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Paginate implements pagination for query
 func Paginate(c *fiber.Ctx) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		page, _ := c.ParamsInt("page", 1)

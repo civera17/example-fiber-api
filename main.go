@@ -13,7 +13,7 @@ func setUpRoutes(app *fiber.App) {
 	app.Get("/hello", routes.Hello)
 	app.Get("/allbooks", routes.AllBooks)
 	app.Get("/sql-history", routes.SqlHistory)
-	app.Get("/slowest-queries/:page/size/:size", routes.SlowestQueries)
+	app.Get("/slowest-queries/:page/size/:size/type/:type", routes.SlowestQueries)
 	app.Post("/addbook", routes.AddBook)
 	app.Post("/book", routes.Book)
 	app.Put("/update", routes.Update)
