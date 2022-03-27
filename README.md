@@ -1,4 +1,4 @@
-# fintech-test
+# Finhub test task
 
 Tech used :
 - Go 1.17.6
@@ -11,3 +11,4 @@ How to start :
 - Run db with docker-compose up --build
 - Build go app with go build -o app
 - Send get request to http://localhost:3000/slowest-queries/:page/size/:pagesize/type/:query-type(SELECT,INSERT...) (to have any result you should do some queries using other endpoints which you can find in main.go)
+- Send request to http://localhost:3000/slowest-queries/:page/size/:pagesize/type/:query-type(SELECT,INSERT...)
