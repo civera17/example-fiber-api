@@ -5,6 +5,7 @@ Tech used :
 - Gorm (https://github.com/go-gorm/gorm) as ORM library 
 - Fiber (https://github.com/gofiber/fiber)
 - Testify (https://github.com/stretchr/testify)
+- Posgresql as DB
 
 How to start :
 
