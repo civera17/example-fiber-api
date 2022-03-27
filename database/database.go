@@ -57,6 +57,10 @@ func ConnectMockDB() sqlmock.Sqlmock {
 	})
 
 	db, err := gorm.Open(dialector)
+	if err != nil {
+		log.Fatal("Failed to connect to mock gorm database. \n", err)
+		os.Exit(2)
+	}
 
 	DB = Dbinstance{
 		Db: db,
