@@ -1,4 +1,4 @@
-# fintech-test
+# Finhub test task
 
 Tech used :
 - Go 1.17.6
