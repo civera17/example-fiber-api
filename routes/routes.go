@@ -33,9 +33,13 @@ func AllBooks(c *fiber.Ctx) error {
 func SlowestQueries(c *fiber.Ctx) error {
 	queries := []models.QueryInfo{}
 
-	queryType := strings.ToUpper(c.Params("type"))
+	queryType := strings.ToUpper(c.Params("type", "SELECT"))
 
 	database.DB.Db.Where("type = ?", queryType).Scopes(Paginate(c)).Find(&queries)
+	if len(queries) < 1 {
+		return c.Status(400).JSON("No such queries")
+	}
+
 	sort.Slice(queries, func(i, j int) bool {
 		return queries[i].CostSeconds > queries[j].CostSeconds
 	})

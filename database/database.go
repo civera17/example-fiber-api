@@ -42,7 +42,7 @@ func ConnectDb() {
 	}
 }
 
-func ConnectMockDb() sqlmock.Sqlmock {
+func ConnectMockDB() sqlmock.Sqlmock {
 	sql, mock, err := sqlmock.New()
 	if err != nil {
 		log.Fatal("Failed to connect to mock database. \n", err)

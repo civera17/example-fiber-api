@@ -14,7 +14,7 @@ import (
 )
 
 func TestAllBooksRoute(t *testing.T) {
-	mockDb := database.ConnectMockDb()
+	mockDb := database.ConnectMockDB()
 	// Setup the app as it is done in the main function
 	app := SetupAPI()
 
