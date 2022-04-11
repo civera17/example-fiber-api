@@ -1,4 +1,4 @@
-# Finhub test task
+# Fiber example
 
 Tech used :
 - Go 1.17.6
